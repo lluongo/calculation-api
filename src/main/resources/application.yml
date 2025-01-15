@@ -1,0 +1,15 @@
+server:
+  port: 8090
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: calculation-api
+  devtools:
+    restart:
+      enabled: true
+  cache:
+    type: redisson
+  redis:
+    config:
+      import: classpath:/redisson.yml

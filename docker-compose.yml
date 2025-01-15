@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+#  app:
+#    image: openjdk:21-jdk-slim
+#    container_name: calculation_api
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8090:8090"
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/calculation-api
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_REDIS_HOST=redis
+#      - SPRING_REDIS_PORT=6379
+#    depends_on:
+##      - postgres
+#      - redis
+#    networks:
+#      - app-network
+
+#  postgres:
+#    image: postgres:latest
+#    container_name: postgres_db
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_DB: mydatabase
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    networks:
+#      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: redis_server
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

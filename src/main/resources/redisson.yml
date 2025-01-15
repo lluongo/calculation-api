@@ -1,0 +1,6 @@
+singleServerConfig:
+  address: "redis://host.docker.internal:6379"
+  timeout: 3000
+  connectionPoolSize: 100 # Opcional, define el tamaño del pool de conexiones
+  idleConnectionTimeout: 10000 # Tiempo máximo de espera para una conexión inactiva (en ms)
+  connectTimeout: 10000 # Tiempo de espera para la conexión inicial (en ms)
