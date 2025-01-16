@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Objects;
 
 @Service
 public class ExternalApiService {
@@ -30,7 +31,7 @@ public class ExternalApiService {
     )
     public String getRequest(String url) throws IOException, InterruptedException {
 
-        LOGGER.info("Retry Number:{} ", RetrySynchronizationManager.getContext().getRetryCount());
+        LOGGER.info("Retry Number:{} ", Objects.requireNonNull(RetrySynchronizationManager.getContext()).getRetryCount());
 
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(url))

@@ -1,9 +1,9 @@
 package com.tenpo.calculation_api.application.services;
 
 import com.tenpo.calculation_api.domain.model.Calculation;
+import com.tenpo.calculation_api.infrastructure.exception.exceptions.ExternalServiceException;
 import com.tenpo.calculation_api.infrastructure.external.services.ExternalApiService;
 import com.tenpo.calculation_api.infrastructure.redis.service.ExternalCacheService;
-import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +34,7 @@ public class CalculationService {
                 percentage = Double.valueOf(externalApiService.getRequest(url));
                 externalCacheService.putPercentage("percentage", percentage);
             } catch (Exception e) {
-                LOGGER.info(e.getMessage());
-                throw new IllegalStateException("No se pudo obtener el porcentaje desde el servicio externo, y no hay valor en caché.");
+                throw new ExternalServiceException("No se pudo obtener el porcentaje desde el servicio externo o no hay valor en caché.", e);
             }
         }
 

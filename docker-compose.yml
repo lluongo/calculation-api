@@ -21,19 +21,19 @@ services:
 #    networks:
 #      - app-network
 
-#  postgres:
-#    image: postgres:latest
-#    container_name: postgres_db
-#    ports:
-#      - "5432:5432"
-#    environment:
-#      POSTGRES_DB: mydatabase
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: postgres
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data
-#    networks:
-#      - app-network
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
 
   redis:
     image: redis:latest

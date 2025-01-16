@@ -31,5 +31,4 @@ public class ExternalCacheService {
         return percentageCache.get(value);
     }
 
-
 }

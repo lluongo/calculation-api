@@ -1,15 +1,18 @@
 package com.tenpo.calculation_api.presentation;
 
 import com.tenpo.calculation_api.application.services.CalculationService;
+import com.tenpo.calculation_api.domain.model.CallHistory;
 import com.tenpo.calculation_api.infrastructure.external.httpClient.HttpClientConfig;
 import com.tenpo.calculation_api.infrastructure.external.services.ExternalApiService;
 import com.tenpo.calculation_api.presentation.dtos.CalculationRequest;
+import org.redisson.api.RList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpClient;
+import java.util.List;
 
 
 @RestController
