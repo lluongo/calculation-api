@@ -1,7 +1,7 @@
 package com.tenpo.calculation_api.presentation;
 
-import com.tenpo.calculation_api.application.services.CalculationService;
-import com.tenpo.calculation_api.application.services.CallHistoryService;
+import com.tenpo.calculation_api.application.CalculationService;
+import com.tenpo.calculation_api.application.CallHistoryService;
 import com.tenpo.calculation_api.domain.model.CallHistory;
 import com.tenpo.calculation_api.presentation.dtos.CalculationRequest;
 import com.tenpo.calculation_api.presentation.dtos.CalculationResponse;

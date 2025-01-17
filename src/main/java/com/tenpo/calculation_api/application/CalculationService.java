@@ -1,11 +1,10 @@
-package com.tenpo.calculation_api.application.services;
+package com.tenpo.calculation_api.application;
 
 import com.tenpo.calculation_api.domain.model.Calculation;
 import com.tenpo.calculation_api.infrastructure.exception.exceptions.ExternalServiceException;
 import com.tenpo.calculation_api.infrastructure.external.services.ExternalApiService;
 import com.tenpo.calculation_api.infrastructure.redis.RedissonConfig;
 import com.tenpo.calculation_api.infrastructure.redis.service.ExternalCacheService;
-import com.tenpo.calculation_api.presentation.dtos.CalculationResponse;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

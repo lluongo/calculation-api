@@ -1,4 +1,4 @@
-package com.tenpo.calculation_api.application.services;
+package com.tenpo.calculation_api.application;
 
 import com.tenpo.calculation_api.domain.model.CallHistory;
 import com.tenpo.calculation_api.infrastructure.persistence.CallHistoryRepository;
