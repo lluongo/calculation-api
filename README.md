@@ -26,6 +26,8 @@ Por otro lado, los filtros son más adecuados porque:
 
 La implementación me permitió grabar todas las peticiones, respuestas y errores procesados.
 
+Para la consulta GET del historial lo implemente  HATEOAS con **PagedResourcesAssembler** poruque ofrece beneficios , especialmente en terminos de estabilidad y la estructura JSON reusltante del procesamiento paginado entre otros beneficios como serializacion directa, facilidad de navegacion, etc
+
 ## 5. Control de tasas (Rate Limiting):
 Se utilizó 1 **interceptor** y 1 **Wrapper** para controlar el **Rate Limit** de peticiones permitidas a la aplicación. Los interceptores permiten aplicar una lógica consistente y centralizada para gestionar la limitación de tasa en todas las llamadas a la API, en lugar de tener que implementar esta lógica en cada punto individual que llama a la API. En este caso, se implementó en el `preHandle` la lógica para controlar el acceso a no más de 3 peticiones por minuto.  
 Para esto, se utilizó el método `tryAcquire()` del objeto `RRateLimiter` de **RedissonAPI**, que emite un “permiso” de acuerdo a la configuración del rate limit que, como se ve en el código de la API, se configuró de la siguiente manera:
