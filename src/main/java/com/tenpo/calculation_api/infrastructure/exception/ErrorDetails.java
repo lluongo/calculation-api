@@ -1,17 +1,19 @@
 package com.tenpo.calculation_api.infrastructure.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
+
+import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class ErrorDetails {
-    @NonNull
+
     private String message;
-    @NonNull
     private String details;
 
-    public ErrorDetails(String message, String details) {
-        this.message = message;
-        this.details = details;
+
+    public ErrorDetails(String errorMessage) {
+        this.message = errorMessage;
     }
 }

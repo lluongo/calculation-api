@@ -4,12 +4,12 @@ import com.tenpo.calculation_api.domain.model.Calculation;
 import com.tenpo.calculation_api.infrastructure.exception.exceptions.ExternalServiceException;
 import com.tenpo.calculation_api.infrastructure.external.services.ExternalApiService;
 import com.tenpo.calculation_api.infrastructure.redis.service.ExternalCacheService;
+import com.tenpo.calculation_api.presentation.dtos.CalculationResponse;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 
 @Service
@@ -17,6 +17,7 @@ public class CalculationService {
     public static final Logger LOGGER = LoggerFactory.getLogger(CalculationService.class);
     private final ExternalApiService externalApiService;
     private final ExternalCacheService externalCacheService;
+    private static final String ERROR_MESSAGE = "No se pudo obtener el porcentaje desde el servicio externo o no hay valor en caché";
 
     @Autowired
     public CalculationService(ExternalCacheService externalCacheService, ExternalApiService externalApiService, RedissonClient redissonClient) {
@@ -30,11 +31,11 @@ public class CalculationService {
 
         if (percentage == null) {
             try {
-                String url = "http://localhost:8091/percentage";
+                String url = "http://localhost:8091/v1/percentage";
                 percentage = Double.valueOf(externalApiService.getRequest(url));
                 externalCacheService.putPercentage("percentage", percentage);
             } catch (Exception e) {
-                throw new ExternalServiceException("No se pudo obtener el porcentaje desde el servicio externo o no hay valor en caché.", e);
+                throw new ExternalServiceException(ERROR_MESSAGE, e);
             }
         }
 

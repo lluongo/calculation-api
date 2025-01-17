@@ -1,5 +1,6 @@
 package com.tenpo.calculation_api.presentation.dtos;
 
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -7,9 +8,9 @@ import java.math.BigDecimal;
 
 @Data
 public class CalculationRequest {
-    @NonNull
+    @NotNull(message = "El numero 1 no puede ser nulo")
     private BigDecimal num1;
-    @NonNull
-    private BigDecimal num2;
 
+    @NotNull(message = "El numero 2 no puede ser nulo")
+    private BigDecimal num2;
 }
