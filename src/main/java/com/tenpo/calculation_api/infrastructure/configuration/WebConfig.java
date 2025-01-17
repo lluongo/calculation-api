@@ -2,7 +2,7 @@ package com.tenpo.calculation_api.infrastructure.configuration;
 
 
 import com.tenpo.calculation_api.infrastructure.interceptor.RateLimitInterceptor;
-import com.tenpo.calculation_api.infrastructure.tool.ResponseCaptureFilter;
+import com.tenpo.calculation_api.infrastructure.filter.ResponseCaptureFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationEventPublisher;
@@ -21,12 +21,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(rateLimitInterceptor).addPathPatterns("/**");
     }
 
-
     @Bean
     public FilterRegistrationBean<ResponseCaptureFilter> responseCaptureFilter(ApplicationEventPublisher eventPublisher) {
         FilterRegistrationBean<ResponseCaptureFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new ResponseCaptureFilter(eventPublisher));
         registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(2);
         return registrationBean;
     }
 }

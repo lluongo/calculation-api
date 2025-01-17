@@ -1,4 +1,4 @@
-package com.tenpo.calculation_api.infrastructure.tool;
+package com.tenpo.calculation_api.infrastructure.filter;
 
 import com.tenpo.calculation_api.infrastructure.event.CallHistoryEvent;
 import com.tenpo.calculation_api.infrastructure.exception.ErrorDetails;
@@ -17,6 +17,7 @@ import org.springframework.context.ApplicationEventPublisher;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ResponseCaptureFilter implements Filter {
     public static final Logger LOGGER = LoggerFactory.getLogger(ResponseCaptureFilter.class);
@@ -33,25 +34,25 @@ public class ResponseCaptureFilter implements Filter {
         RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
 
         chain.doFilter(requestWrapper, responseCopier);
-
         responseCopier.flushBuffer(); // Enviar respuesta original al cliente
 
         byte[] copy = responseCopier.getCopy();
         String responseContent = new String(copy, response.getCharacterEncoding());
-        LOGGER.info(responseContent);
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        String endpoint = httpRequest.getRequestURI();
+        String endpoint = httpRequest.getMethod() + ": " + httpRequest.getRequestURI();
         String params = requestWrapper.getBody();
         String errorMessage = "";
 
-
         ErrorDetails errorDetails = (ErrorDetails) request.getAttribute("errorDetails");
         if (errorDetails != null) {
+            if ( ((HttpServletResponse) response).getStatus() == 429 ){
+                responseContent = errorDetails.getDetails().get("Error");
+            }
             errorMessage = httpResponse.getStatus() + " - " + errorDetails.getMessage();
         }
 
-        eventPublisher.publishEvent(new CallHistoryEvent(endpoint, params, responseContent, errorMessage, LocalDateTime.now()));
+        eventPublisher.publishEvent(new CallHistoryEvent(endpoint, params, cut(responseContent), errorMessage, LocalDateTime.now()));
     }
 
     @Override
@@ -60,6 +61,10 @@ public class ResponseCaptureFilter implements Filter {
 
     @Override
     public void destroy() {
+    }
+
+    public String cut(String string) {
+        return string.length() > 255 ? string.substring(0, 255) : string;
     }
 }
 
