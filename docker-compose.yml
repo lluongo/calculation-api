@@ -1,27 +1,27 @@
 version: '3.8'
 
 services:
-  calculation-api:
-    container_name: calculation-api
-    image: lluongo/calculation-api:latest
-    ports:
-      - "8090:8090"
-    depends_on:
-      - postgres
-      - redis
-    networks:
-      - app-network
-
-  return-percentage:
-    container_name: return-percentage-api
-    image: lluongo/return-percentage-api:latest
-    ports:
-      - "8091:8091"
-    depends_on:
-      - postgres
-      - redis
-    networks:
-      - app-network
+#  calculation-api:
+#    container_name: calculation-api
+#    image: lluongo/calculation-api:latest
+#    ports:
+#      - "8090:8090"
+#    depends_on:
+#      - postgres
+#      - redis
+#    networks:
+#      - app-network
+#
+#  return-percentage:
+#    container_name: return-percentage-api
+#    image: lluongo/return-percentage-api:latest
+#    ports:
+#      - "8091:8091"
+#    depends_on:
+#      - postgres
+#      - redis
+#    networks:
+#      - app-network
 
   postgres:
     image: postgres:latest

@@ -1,5 +1,54 @@
 # calculation-api
 
+# Como se descarga el challenge
+
+## Paso 1 :  bajar 2 repos calculation-api y return-percentage-api (simula la api externa que devuelve un mock de 10%)
+
+git clone https://github.com/lluongo/calculation-api.git
+git clone https://github.com/lluongo/return-percentage-api.git
+
+## Paso 2 :
+
+Ubicarse en la carpeta donde se descargaron los proyectos e ingresar al folder del repo calculation-api ya que se usara el docker-compose de ese repo para levantar todo el challenge.
+
+## Paso 3 : 
+Ejecutar el comando --> docker-compose up   (-d si se quiere ejecutar en background) 
+
+Con esto se descargarán las imagenes de : calculation-api:latest , return-percentage-api:latest , postgres:latest y redis:latest.
+Luego se inciaran las instancias y el challenge ya quedaria en funcionamiento.
+
+Se puede acceder a :  http://localhost:8090/swagger-ui/index.html y http://localhost:8090/v3/api-docs para ver la definicion de endpoints desarrollados
+
+Enpoints :
+
+Calculate -->  POST:  http://localhost:8090/v1/calculation
+
+Req Ejemplo  
+
+{
+ "num1":1.0,
+ "num2":2.0
+ }
+
+Resp ejemplo :
+{
+"result": 3.30,
+"num1": 1.0,
+"num2": 2.0
+}
+
+getHistory --> GET: http://localhost:8090/v1/calculation
+
+Req ejemplo
+
+{
+"page": 1 ,
+"size": 10
+}
+
+
+
+
 # Justificación de las decisiones técnicas tomadas:
 
 ## 1. Cálculo con porcentaje dinámico:
@@ -26,7 +75,8 @@ Por otro lado, los filtros son más adecuados porque:
 
 La implementación me permitió grabar todas las peticiones, respuestas y errores procesados.
 
-Para la consulta GET del historial lo implemente  HATEOAS con **PagedResourcesAssembler** poruque ofrece beneficios , especialmente en terminos de estabilidad y la estructura JSON reusltante del procesamiento paginado entre otros beneficios como serializacion directa, facilidad de navegacion, etc
+Por ultimo use HATEOAS con Pageable en una API REST porque permite proporcionar enlaces dinámicos para la navegación entre páginas (como next, previous, first y last), haciendo que el cliente pueda explorar los datos paginados de forma intuitiva y sin necesidad de construir manualmente las URLs, mejorando la experiencia y manteniendo una arquitectura RESTful.
+
 
 ## 5. Control de tasas (Rate Limiting):
 Se utilizó 1 **interceptor** y 1 **Wrapper** para controlar el **Rate Limit** de peticiones permitidas a la aplicación. Los interceptores permiten aplicar una lógica consistente y centralizada para gestionar la limitación de tasa en todas las llamadas a la API, en lugar de tener que implementar esta lógica en cada punto individual que llama a la API. En este caso, se implementó en el `preHandle` la lógica para controlar el acceso a no más de 3 peticiones por minuto.  

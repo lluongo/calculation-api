@@ -39,7 +39,7 @@ public class RateLimiterService {
     public boolean acquirePermit() {
         ensureRateLimiterExists();
         RRateLimiter rateLimiter = redissonClient.getRateLimiter(rate_limiter_key);
-            return rateLimiter.tryAcquire();
+        return rateLimiter.tryAcquire();
     }
 
     private void ensureRateLimiterExists() {
