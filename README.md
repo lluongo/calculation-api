@@ -37,15 +37,26 @@ Resp ejemplo :
 "num2": 2.0
 }
 
-getHistory --> GET: http://localhost:8090/v1/calculation
+getHistory --> GET: http://localhost:8090/v1/calculation?page=50&size=20&sort=timestamp,desc
 
-Req ejemplo
+donde page esla pagina solicitada, size el tamaño, sort los parametros de orden.
 
-{
-"page": 1 ,
-"size": 10
-}
 
+# Pruebas que podrian realizarse:
+
+1) Con todos los contenedores activos (redis , base y ambas apis) , se invoca el EP http://localhost:8090/v1/calculation 4 veces, las 3 primeras retorno resultado la ultima retorna 429. (se puede repetir pasado 1 minuto la misma prueba , incluso mezaclando llamadas entre el calculo y el get del historico)
+2) Probar de enviar null en la peticion de posteo de calculo, devolvera errores 400 controlados por Lombok.
+3) Devuelve error por no poder reuperar el porcentage : 
+Con todos los contenedores activos , se procede a bajar el contenedor de la api Return-percentage-api, como ?
+- Ejecutar comando docker --> `docker stop return-percentage-api`
+- Luego ingresar al redis interactivamente y realizar un flush all. 
+  a) `docker exec -it redis_server bash`
+  b) `redis-cli`
+  c) `flushall`
+- ahora se puede volver a ejecutar el EP POST http://localhost:8090/v1/calculation, se observara en el log que la api reintenta 4 veces (la primera es la original , las 3 siguientes son retrys solicitados en el challenge ) y devolvera un ExternalServiceException con el mensaje "No se pudo obtener el porcentaje desde el servicio externo o no hay valor en caché"
+
+4) Se puede ejecutar cualquier EP y ver que es registarado en la base de datos.
+5) Cualquier otra prueba posible, por ejemplo si se baja el  contenedor del redis la api al peticionar devolver "Internal Redis Error"
 
 
 
