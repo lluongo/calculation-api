@@ -2,9 +2,10 @@
 
 # Como se descarga el challenge
 
-## Paso 1 :  bajar 2 repos calculation-api y return-percentage-api (simula la api externa que devuelve un mock de 10%)
+## Paso 1 :  
+bajar 2 repos calculation-api y return-percentage-api (simula la api externa que devuelve un mock de 10%)
 
-git clone https://github.com/lluongo/calculation-api.git
+git clone https://github.com/lluongo/calculation-api.git y 
 git clone https://github.com/lluongo/return-percentage-api.git
 
 ## Paso 2 :
