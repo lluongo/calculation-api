@@ -1,9 +1,6 @@
 package com.tenpo.calculation_api.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -24,7 +21,15 @@ public class CallHistory {
     public CallHistory() {
     }
 
-    public CallHistory( LocalDateTime timestamp, String endpoint, String parameters, String response, String error) {
+    @PrePersist
+    @PreUpdate
+    private void sanitizeFields() {
+        if (response != null) {
+            response = response.replace("\0", "");
+        }
+    }
+
+    public CallHistory(LocalDateTime timestamp, String endpoint, String parameters, String response, String error) {
         this.timestamp = timestamp;
         this.endpoint = endpoint;
         this.parameters = parameters;

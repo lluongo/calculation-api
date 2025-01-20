@@ -1,6 +1,0 @@
-
-FROM openjdk:21-jdk-slim
-EXPOSE 8090
-WORKDIR /app
-COPY target/*.jar app.jar
-CMD ["java", "-jar", "calculation-api.jar"]

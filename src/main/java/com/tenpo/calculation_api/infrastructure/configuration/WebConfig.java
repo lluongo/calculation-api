@@ -1,8 +1,8 @@
 package com.tenpo.calculation_api.infrastructure.configuration;
 
 
-import com.tenpo.calculation_api.infrastructure.interceptor.RateLimitInterceptor;
 import com.tenpo.calculation_api.infrastructure.filter.ResponseCaptureFilter;
+import com.tenpo.calculation_api.infrastructure.interceptor.RateLimitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationEventPublisher;
@@ -18,7 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(rateLimitInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(rateLimitInterceptor).addPathPatterns("/**")
+                .excludePathPatterns("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**");
     }
 
     @Bean

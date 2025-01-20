@@ -1,22 +1,24 @@
 version: '3.8'
 
 services:
-#  app:
-#    image: openjdk:21-jdk-slim
-#    container_name: calculation_api
-#    build:
-#      context: ./
-#      dockerfile: Dockerfile
+#  calculation-api:
+#    container_name: calculation-api
+#    image: lluongo/calculation-api:latest
 #    ports:
 #      - "8090:8090"
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/calculation-api
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=postgres
-#      - SPRING_REDIS_HOST=redis
-#      - SPRING_REDIS_PORT=6379
 #    depends_on:
-##      - postgres
+#      - postgres
+#      - redis
+#    networks:
+#      - app-network
+#
+#  return-percentage:
+#    container_name: return-percentage-api
+#    image: lluongo/return-percentage-api:latest
+#    ports:
+#      - "8091:8091"
+#    depends_on:
+#      - postgres
 #      - redis
 #    networks:
 #      - app-network

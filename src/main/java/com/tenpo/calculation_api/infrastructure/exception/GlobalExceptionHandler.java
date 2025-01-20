@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex, WebRequest request) {
+        LOGGER.info(ex.getMessage());
         Map<String, String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -43,6 +44,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
+        LOGGER.info(ex.getMessage());
         Map<String, String> errors = ex.getConstraintViolations()
                 .stream()
                 .collect(Collectors.toMap(
@@ -56,6 +58,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ExternalServiceException.class)
     public ResponseEntity<ErrorDetails> handleExternalServiceException(ExternalServiceException ex, WebRequest request) {
+        LOGGER.info(ex.getMessage());
         Map<String, String> errors = new HashMap<>();
         errors.put("Error",ex.getMessage());
         ErrorDetails errorDetails = new ErrorDetails(errors,"External Service Error");
@@ -65,6 +68,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RedisException.class)
     public ResponseEntity<?> handleRedisGlobalException(RedisException ex, WebRequest request) {
+        LOGGER.info(ex.getMessage());
         Map<String, String> errors = new HashMap<>();
         errors.put("Error","There is a problem with the redis server");
         ErrorDetails errorDetails = new ErrorDetails(errors,"Internal Redis Error");
@@ -74,6 +78,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PSQLException.class)
     public ResponseEntity<ErrorDetails> handleExternalServiceException(PSQLException ex, WebRequest request) {
+        LOGGER.info(ex.getMessage());
         Map<String, String> errors = new HashMap<>();
         errors.put("Error",ex.getMessage().substring(0, 254));
         ErrorDetails errorDetails = new ErrorDetails(errors,"External Service Error");
@@ -83,6 +88,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGlobalException(Exception ex, WebRequest request) {
+        LOGGER.info(ex.getMessage());
         Map<String, String> errors = new HashMap<>();
         errors.put("Error","Server Error");
         ErrorDetails errorDetails = new ErrorDetails(errors,"Internal Server Error");
