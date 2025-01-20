@@ -30,7 +30,7 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.xml
 
 # general configs
-get_percentage_url: "http://localhost:8091/v1/percentage"
+get_percentage_url: "http://host.docker.internal:8091/v1/percentage"
 error_429_Message: "Too many requests - please try again later."
 
 # 429 to many values parameters
